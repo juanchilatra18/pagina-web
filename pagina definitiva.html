@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity Core | Servicio Técnico y Tecnología</title>
+
+    <style>
+        /* ESTILOS CSS GENERALES Y MODERNOS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            color: #6366f1;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 3px solid #6366f1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        header p {
+            color: #a5b4fc;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* Menú de Navegación */
+        nav {
+            background-color: #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav li a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 15px 22px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav li a:hover {
+            background-color: #6366f1;
+            color: #ffffff;
+            box-shadow: inset 0 -3px 0 #38bdf8;
+        }
+
+        /* Layout Principal (Secciones + Barra Lateral) */
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        #content {
+            flex: 3;
+            min-width: 300px;
+        }
+
+        aside {
+            flex: 1;
+            min-width: 280px;
+            background-color: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            height: fit-content;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tarjetas de Artículos / Servicios */
+        .article {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .article:hover {
+            transform: translateY(-3px);
+            border-color: #6366f1;
+        }
+
+        .article h2 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 8px;
+        }
+
+        .imagen-web {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .article p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        /* Catálogo Dinámico desde JS (Objetos y Arrays) */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card-item {
+            background-color: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        .card-item h4 {
+            color: #f1f5f9;
+            margin-bottom: 5px;
+        }
+
+        .card-item .price {
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Formularios y Validación JS */
+        aside h2 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #ffffff;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: #6366f1;
+        }
+
+        button,
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover,
+        input[type="submit"]:hover {
+            background-color: #4f46e5;
+        }
+
+        /* Mensajes de Validación JS */
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #22c55e;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #020617;
+            color: #64748b;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Gravity Core</h1>
+        <p>Soluciones Técnicas, Mantenimiento y Hardware</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#content">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+
+        <!-- SECCIÓN PRINCIPAL DE CONTENIDOS -->
+        <section id="content">
+
+            <article class="article" id="servicios">
+                <h2>Reparaciones</h2>
+                <img src="https://th.bing.com/th/id/OIP.W7I3jTrN049-2p3FJovBzwHaEO?w=305&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+                    class="imagen-web" alt="Reparación de hardware">
+                <p>Reparamos consolas y dispositivos electrónicos, solucionando fallas de hardware y software para que
+                    vuelvan a funcionar correctamente con total garantía.</p>
+            </article>
+
+            <article class="article">
+                <h2>Mantenimiento</h2>
+                <img src="https://th.bing.com/th/id/OIP.PvcsL2QhBIuR2RTjV7JqLwHaEK?w=298&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+                    class="imagen-web" alt="Mantenimiento preventivo">
+                <p>Realizamos mantenimiento preventivo completo: limpieza profunda, cambio de pasta térmica y revisión
+                    de componentes para extender la vida útil de tus equipos.</p>
+            </article>
+
+            <!-- SECCIÓN CATÁLOGO: Generado con JS (Arrays y Objetos) -->
+            <article class="article" id="catalogo">
+                <h2>Catálogo Destacado</h2>
+                <p>Productos y repuestos disponibles en tienda (cargados dinámicamente con JavaScript):</p>
+                <div class="catalog-grid" id="catalog-container">
+                    <!-- Aquí JS insertará los objetos del Array -->
+                </div>
+            </article>
+
+        </section>
+
+        <!-- BARRA LATERAL CON FORMULARIO Y VALIDACIÓN JS -->
+        <aside id="contacto">
+            <h2>Buscador</h2>
+            <form id="search-form" style="margin-bottom: 25px;">
+                <div class="form-group">
+                    <input type="text" id="search-input" placeholder="Buscar servicio...">
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+
+            <h2>Solicitar Cotización</h2>
+            <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:12px;">Déjanos tus datos y te contactaremos.</p>
+
+            <!-- Formulario para Validación con JS -->
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" placeholder="Tu nombre">
+                    <div class="error-message" id="error-nombre">Por favor ingresa tu nombre.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" placeholder="ejemplo@correo.com">
+                    <div class="error-message" id="error-email">Ingresa un correo electrónico válido.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Servicio Requerido:</label>
+                    <textarea id="mensaje" rows="3" placeholder="Describe tu problema..."></textarea>
+                    <div class="error-message" id="error-mensaje">Por favor escribe un mensaje.</div>
+                </div>
+
+                <button type="submit">Enviar Solicitud</button>
+                <div class="success-message" id="success-msg">¡Solicitud enviada con éxito!</div>
+            </form>
+        </aside>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Gravity Core. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT (SEMANA 6: ARRAYS, OBJETOS Y VALIDACIÓN DE FORMULARIOS) -->
+    <script>
+        // 1. MANEJO DE ARRAYS Y OBJETOS (Catálogo Dinámico)
+        const productos = [
+            { nombre: "Mantenimiento PS4/PS5", categoria: "Servicio", precio: "$80.000 COP" },
+            { nombre: "Cambio Pasta Térmica", categoria: "Mantenimiento", precio: "$45.000 COP" },
+            { nombre: "SSD 500GB Kingston", categoria: "Repuesto", precio: "$190.000 COP" },
+            { nombre: "Mando Inalámbrico PC/Xbox", categoria: "Accesorio", precio: "$150.000 COP" }
+        ];
+
+        const container = document.getElementById('catalog-container');
+
+        // Recorrer el Array de Objetos para mostrarlo en el HTML
+        productos.forEach(producto => {
+            const card = document.createElement('div');
+            card.className = 'card-item';
+            card.innerHTML = `
+                <h4>${producto.nombre}</h4>
+                <p style="font-size:0.8rem; color:#94a3b8;">${producto.categoria}</p>
+                <p class="price">${producto.precio}</p>
+            `;
+            container.appendChild(card);
+        });
+
+        // 2. VALIDACIÓN DE FORMULARIOS CON JS
+        const form = document.getElementById('contact-form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita que la página se recargue
+
+            let isValid = true;
+
+            // Campos del formulario
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+
+            // Elementos de error
+            const errorNombre = document.getElementById('error-nombre');
+            const errorEmail = document.getElementById('error-email');
+            const errorMensaje = document.getElementById('error-mensaje');
+            const successMsg = document.getElementById('success-msg');
+
+            // Validar Nombre
+            if (nombre === "") {
+                errorNombre.style.display = "block";
+                isValid = false;
+            } else {
+                errorNombre.style.display = "none";
+            }
+
+            // Validar Email (Expresión regular básica)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "" || !emailRegex.test(email)) {
+                errorEmail.style.display = "block";
+                isValid = false;
+            } else {
+                errorEmail.style.display = "none";
+            }
+
+            // Validar Mensaje
+            if (mensaje === "") {
+                errorMensaje.style.display = "block";
+                isValid = false;
+            } else {
+                errorMensaje.style.display = "none";
+            }
+
+            // Si todo es válido
+            if (isValid) {
+                successMsg.style.display = "block";
+                form.reset(); // Limpiar el formulario
+
+                setTimeout(() => {
+                    successMsg.style.display = "none";
+                }, 4000);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
